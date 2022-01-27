@@ -1,4 +1,6 @@
 <template>
+<v-row>
+  <v-col>
   <v-app id="inspair">
     <v-navigation-drawer color="#FFFFFF" v-model="drawer" app>
       <v-list-item>
@@ -29,9 +31,9 @@
     <v-app-bar app color="#1A237E" >
       <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title class="white--text" > Todo Task List</v-toolbar-title>
+      <v-toolbar-title class="white--text">Todos</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-icon color="white">mdi-refresh</v-icon>
+      <v-icon  class="pr-10" color="white" >mdi-refresh</v-icon>
 
      
     </v-app-bar>
@@ -39,6 +41,8 @@
      <router-view></router-view>
     </main>
   </v-app>
+  </v-col>
+</v-row>
 </template>
 <script>
 export default {
