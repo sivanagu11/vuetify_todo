@@ -28,7 +28,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app color="#1A237E" >
+    <v-app-bar app color="#1A237E">
       <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="white--text">Todos</v-toolbar-title>
@@ -57,7 +57,7 @@ export default {
 </script>
 <style>
 #inspair{
-  background-image: url('../src/assets/photo-1533035336122-4327d347d2fe.jpg');
+background-image: url('../src/assets/photo-1533035336122-4327d347d2fe.jpg');
 
   margin: 0;
   padding: 0;

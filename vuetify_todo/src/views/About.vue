@@ -31,7 +31,7 @@ export default{
     },
 methods:{
     submit(){
-        console.log('Name is ${this.name} and email is ${this.email}  github is ${this.github}')
+        console.log('Name is ${this.name} and email is ${this.email} and github is ${this.github}')
     }
 },
 clear(){
@@ -39,7 +39,7 @@ clear(){
     this.name= ''
     this.email= ''
     this.Github= ''
-},
+}
 
 }
  
