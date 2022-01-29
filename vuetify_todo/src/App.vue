@@ -28,14 +28,15 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app color="#283593">
+    <v-app-bar app color="#01579B
+
+
+">
       <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="white--text">Todos</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-icon  class="pr-10" color="white" >mdi-refresh</v-icon>
-
-     
     </v-app-bar>
     <main>
      <router-view></router-view>
@@ -59,7 +60,7 @@ export default {
 #inspair{
   width: 100%;
   height: 100%;
-background-image: url('../src/assets/photo-1533035336122-4327d347d2fe.jpg');
+background-image: url('../src/assets/Plain-Background-1209-768x576.jpg');
 
  
 }

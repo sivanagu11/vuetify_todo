@@ -5,22 +5,21 @@
         <v-row justify="center" class="my-12">
           <v-card
             cols="4"
-            md="4"
-            class="pt-10 px-10"
-            height="550px"
+            class="pt-16 px-10"
+            height="600px"
             width="500px"
             overflow="hidden"
             display="fixed"
           >
-            <h2 class="px-4">Today</h2>
+            <h2 class="px-4 ">Today</h2>
             <v-list flat>
               <div v-for="task in tasks" :key="task.id">
                 <v-list-item @click="doneTask(task.id)">
                   <template v-slot:default>
                     <v-list-item-action>
                       <v-checkbox
+
                         :input="task.done"
-                        color="primary"
                       ></v-checkbox>
                     </v-list-item-action>
 
@@ -52,20 +51,20 @@
                       ></v-checkbox>
                     </v-list-item-action>
 
-                    <v-list-item-content>
+                    <v-list-item-content >
                       <v-list-item-title
-                        :class="{ 'text-decoration-line-through': item.done }"
-                      >
+                        :class="{ 'text-decoration-line-through': item.done }" >
                         {{ item.title }}
                       </v-list-item-title>
-                    </v-list-item-content>  
-                    <v-btn >
+                    </v-list-item-content>
+                    <v-btn icon>
                       <v-icon color="black">mdi-delete</v-icon>
                     </v-btn>
                   </template>
                 </v-list-item>
               </div>
             </v-list>
+            <v-text-field v-model="newTaskTitle" @click:append-outer="addTask" @keyup.enter="addTask" class="pa-3" outlined label="I want to...." append-outer-icon="mdi-plus-circle " color="teal" hide-details clearable></v-text-field>
           </v-card>
         </v-row>
       </div>
@@ -77,6 +76,7 @@
 export default {
   data() {
     return {
+      newTaskTitle: '',
       tasks: [
         {
           id: 1,
@@ -124,7 +124,15 @@ export default {
       let item = this.items.filter((item) => item.id === id)[0];
       item.done = !item.done;
     },
-
+     addTask() {
+            let newTask = {
+                id: Date.now(),
+                title: this.newTaskTitle,
+                done: false
+            }
+            this.tasks.push(newTask)
+            this.newTaskTitle = ''
+        },
   },
 };
 </script>

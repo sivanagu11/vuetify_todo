@@ -1,16 +1,16 @@
 <template>
   <v-container mt-16>
     <div>
-      <v-row justify="center" class="my-12">
+      <v-row justify="center" class="my-1">
         <v-card class="px-16" height="400px" width="400px">
-          <v-card-title>
+          <v-card-title  >
             <h2>About Me</h2>
           </v-card-title>
           <form>
             <v-text-field
               v-model="Name"
               class="input"
-              outlined
+               outlined 
               label=" Full Name"
             >
             </v-text-field>
