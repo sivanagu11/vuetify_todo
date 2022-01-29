@@ -1,6 +1,6 @@
 <template>
 <v-row>
-  <v-col>
+  <v-col cols="12">
   <v-app id="inspair">
     <v-navigation-drawer color="#FFFFFF" v-model="drawer" app>
       <v-list-item>
@@ -28,7 +28,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app color="#1A237E">
+    <v-app-bar app color="#283593">
       <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title class="white--text">Todos</v-toolbar-title>
@@ -57,12 +57,18 @@ export default {
 </script>
 <style>
 #inspair{
+  width: 100%;
+  height: 100%;
 background-image: url('../src/assets/photo-1533035336122-4327d347d2fe.jpg');
 
-  margin: 0;
-  padding: 0;
+ 
+}
+::-webkit-scrollbar{
+  display: none;
 }
 </style>
+
+
 
 
 
