@@ -2,25 +2,23 @@
   <div class="Home">
     <v-container mt-16>
       <div class="radius">
-        <v-row justify="center" class="my-12">
+        <v-row justify="center" class="my-16">
           <v-card
             cols="4"
-            class="pt-16 px-10"
+            class="pt-5 px-10"
             height="600px"
             width="500px"
             overflow="hidden"
             display="fixed"
           >
-            <h2 class="px-4 ">Today</h2>
+            <h2 class="px-4">Today</h2>
+
             <v-list flat>
               <div v-for="task in tasks" :key="task.id">
                 <v-list-item @click="doneTask(task.id)">
                   <template v-slot:default>
                     <v-list-item-action>
-                      <v-checkbox
-
-                        :input="task.done"
-                      ></v-checkbox>
+                      <v-checkbox :input="task.done"></v-checkbox>
                     </v-list-item-action>
 
                     <v-list-item-content>
@@ -31,7 +29,7 @@
                       </v-list-item-title>
                     </v-list-item-content>
                     <v-list-item-action>
-                      <v-btn icon>
+                      <v-btn @click.stop="deleteTask(task.id)" icon>
                         <v-icon color="black">mdi-delete</v-icon>
                       </v-btn>
                     </v-list-item-action>
@@ -39,6 +37,7 @@
                 </v-list-item>
               </div>
             </v-list>
+
             <h2 class="px-4">Tommorrow</h2>
             <v-list flat>
               <div v-for="item in items" :key="item.id">
@@ -51,20 +50,33 @@
                       ></v-checkbox>
                     </v-list-item-action>
 
-                    <v-list-item-content >
+                    <v-list-item-content>
                       <v-list-item-title
-                        :class="{ 'text-decoration-line-through': item.done }" >
+                        :class="{ 'text-decoration-line-through': item.done }"
+                      >
                         {{ item.title }}
                       </v-list-item-title>
                     </v-list-item-content>
-                    <v-btn icon>
+                    <v-btn @click.stop="deleteItem(item.id)" icon>
                       <v-icon color="black">mdi-delete</v-icon>
                     </v-btn>
                   </template>
                 </v-list-item>
               </div>
             </v-list>
-            <v-text-field v-model="newTaskTitle" @click:append-outer="addTask" @keyup.enter="addTask" class="pa-3" outlined label="I want to...." append-outer-icon="mdi-plus-circle " color="teal" hide-details clearable></v-text-field>
+
+            <v-text-field
+              v-model="newTaskTitle"
+              @click:append-outer="addTask"
+              @keyup.enter="addTask"
+              class="pa-3"
+              outlined
+              label="add new task"
+              append-outer-icon="mdi-plus-circle "
+              color="teal"
+              hide-details
+              clearable
+            ></v-text-field>
           </v-card>
         </v-row>
       </div>
@@ -76,7 +88,7 @@
 export default {
   data() {
     return {
-      newTaskTitle: '',
+      newTaskTitle: "",
       tasks: [
         {
           id: 1,
@@ -124,15 +136,22 @@ export default {
       let item = this.items.filter((item) => item.id === id)[0];
       item.done = !item.done;
     },
-     addTask() {
-            let newTask = {
-                id: Date.now(),
-                title: this.newTaskTitle,
-                done: false
-            }
-            this.tasks.push(newTask)
-            this.newTaskTitle = ''
-        },
+    addTask() {
+      let newTask = {
+        id: Date.now(),
+        title: this.newTaskTitle,
+        done: false,
+      };
+      this.tasks.push(newTask);
+      this.newTaskTitle = "";
+    },
+    deleteTask(id){
+      this.tasks=this.tasks.filter(task => task.id !== id)
+    },
+    deleteItem(id){
+   this.items=this.items.filter(item => item.id !== id)
+    }
+    
   },
 };
 </script>
