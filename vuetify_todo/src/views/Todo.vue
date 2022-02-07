@@ -6,16 +6,38 @@
           <v-card
             cols="4"
             class="pt-5 px-10"
-            height="600px"
-            width="500px"
+            height="700px"
+            width="600px"
             overflow="hidden"
             display="fixed"
           >
-            <h2 class="px-4">Today</h2>
+           <v-menu
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+         
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              v-on="on"
+              class="indigo darken-4 white--text"
+               absolute
+                center
+                :style="{left: '95%', transform:'translateX(-95%)'}"
 
+            > calender</v-btn>
+          </template>
+          <v-date-picker
+            v-model="date"
+            no-title
+          ></v-date-picker>
+        </v-menu>
+            <h2 class="px-4">Today</h2>
+              
             <v-list flat>
               <div v-for="task in tasks" :key="task.id">
-                <v-list-item @click="doneTask(task.id)">
+                <v-list-item v-if="task.date == getTodaydate()" @click="doneTask(task.id)">
                   <template v-slot:default>
                     <v-list-item-action>
                       <v-checkbox :input="task.done"></v-checkbox>
@@ -40,31 +62,57 @@
 
             <h2 class="px-4">Tommorrow</h2>
             <v-list flat>
-              <div v-for="item in items" :key="item.id">
-                <v-list-item @click="doneItem(item.id)">
+              <div v-for="task in tasks" :key="task.id">
+                <v-list-item v-if="task.date == getTommorrowdate()" @click="doneTask(task.id)">
                   <template v-slot:default>
                     <v-list-item-action>
                       <v-checkbox
-                        :input="item.done"
+                        :input="task.done"
                         color="primary"
                       ></v-checkbox>
                     </v-list-item-action>
 
                     <v-list-item-content>
                       <v-list-item-title
-                        :class="{ 'text-decoration-line-through': item.done }"
+                        :class="{ 'text-decoration-line-through': task.done }"
                       >
-                        {{ item.title }}
+                        {{ task.title }}
                       </v-list-item-title>
                     </v-list-item-content>
-                    <v-btn @click.stop="deleteItem(item.id)" icon>
+                    <v-btn @click.stop="deleteTask(task.id)" icon>
                       <v-icon color="black">mdi-delete</v-icon>
                     </v-btn>
                   </template>
                 </v-list-item>
               </div>
             </v-list>
+             <h2 class="px-4">Upcoming</h2>
+            <v-list flat>
+              <div v-for="task in tasks" :key="task.id">
+                <v-list-item v-if="task.date == getUpcomingDate()" @click="doneTask(task.id)">
+                  <template v-slot:default>
+                    <v-list-item-action>
+                      <v-checkbox
+                        :input="task.done"
+                        color="primary"
+                      ></v-checkbox>
+                    </v-list-item-action>
 
+                    <v-list-item-content>
+                      <v-list-item-title
+                        :class="{ 'text-decoration-line-through': task.done }"
+                      >
+                        {{ task.title }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                    <v-btn @click.stop="deleteTask(task.id)" icon>
+                      <v-icon color="black">mdi-delete</v-icon>
+                    </v-btn>
+                  </template>
+                </v-list-item>
+              </div>
+            </v-list>
+           
             <v-text-field
               v-model="newTaskTitle"
               @click:append-outer="addTask"
@@ -74,9 +122,11 @@
               label="add new task"
               append-outer-icon="mdi-plus-circle "
               color="teal"
-              hide-details
-              clearable
-            ></v-text-field>
+            >
+             </v-text-field>
+         
+            
+
           </v-card>
         </v-row>
       </div>
@@ -89,41 +139,11 @@ export default {
   data() {
     return {
       newTaskTitle: "",
+      date: "",
       tasks: [
-        {
-          id: 1,
-          title: "Going to office",
-          done: false,
-        },
-        {
-          id: 2,
-          title: "learning new concepts",
-          done: false,
-        },
-        {
-          id: 3,
-          title: "practice more ",
-          done: false,
-        },
+        
       ],
-      newTask: null,
-      items: [
-        {
-          id: 1,
-          title: "learn vuetify",
-          done: false,
-        },
-        {
-          id: 2,
-          title: "practice vuetify",
-          done: false,
-        },
-        {
-          id: 3,
-          title: "learn grid",
-          done: false,
-        },
-      ],
+      newTask: null
     };
   },
   methods: {
@@ -132,26 +152,38 @@ export default {
       task.done = !task.done;
     },
 
-    doneItem(id) {
-      let item = this.items.filter((item) => item.id === id)[0];
-      item.done = !item.done;
-    },
+    
     addTask() {
       let newTask = {
         id: Date.now(),
         title: this.newTaskTitle,
+        date: this.date,
         done: false,
       };
       this.tasks.push(newTask);
       this.newTaskTitle = "";
+      localStorage.setItem('tasks',JSON.stringify(newTask));
     },
-    deleteTask(id){
-      this.tasks=this.tasks.filter(task => task.id !== id)
+    deleteTask(id) {
+      this.tasks = this.tasks.filter((task) => task.id !== id);
+    },   
+    getTodaydate(){
+      console.log(this.date)
+      let d = new Date();
+      return d.toISOString().split("T")[0];
     },
-    deleteItem(id){
-   this.items=this.items.filter(item => item.id !== id)
-    }
-    
+    getTommorrowdate() {
+      let d = new Date();
+      d.setDate(d.getDate() + 1);
+     return d.toISOString().split("T")[0];
+    },
+    getUpcomingDate(){
+          let d = new Date();
+      d.setDate(d.getDate() + 7);
+     return d.toISOString().split("T")[0];
+     
+
+    },
   },
 };
 </script>

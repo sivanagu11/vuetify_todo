@@ -30,11 +30,7 @@
         </v-navigation-drawer>
         <v-app-bar
           app
-          color="#01579B
-
-
-"
-        >
+          color="#01579B">
           <v-app-bar-nav-icon
             class="white--text"
             @click="drawer = !drawer"
